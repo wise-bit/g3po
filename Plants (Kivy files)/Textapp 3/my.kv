@@ -1,0 +1,61 @@
+#:import random random.random
+
+<ThemeBackground>:
+    orientation: 'vertical'
+    myslider: textinput
+    # textt: textt
+
+    canvas:
+        Color:
+            rgb: 1, 1, 1
+        Rectangle:
+            source: 'data/images/background.jpg'
+            size: self.size
+
+    BoxLayout:
+        padding: 10
+        spacing: 10
+        size_hint: 1, None
+        pos_hint: {'top': 1}
+        height: 44
+        Image:
+            size_hint: None, None
+            size: 24, 24
+            source: 'data/logo/kivy-icon-24.png'
+        Label:
+            height: 24
+            text_size: self.size
+            color: (1, 1, 1, .8)
+            text: 'Kivy 1.9.0.'
+            valign: 'middle'
+
+    GridLayout:
+        cols: 2
+        Label:
+            text: 'Please enter the \nucleotide sequence term:'
+            bold: False
+            font_name: 'data/fonts/DejaVuSans.ttf'
+            font_size: 22
+            halign: 'center'
+
+        TextInput:
+            id: textinput
+            value: 
+            # orientation: "horizontal"
+            width: "48dp"
+
+        Label
+            text: ''
+
+        Label
+            text: '{}'.format(textinput.value)
+            halign: 'center'
+            valign: 'center'
+            bold: True
+            text_size: self.size
+            font_size: 48
+
+    Button:
+        text: 'Enter'
+        size_hint_y: None
+        height: '50sp'

@@ -1,0 +1,15 @@
+<MyDumbScreen@BoxLayout>:
+    orientation: "vertical"
+
+    TextInput:
+        id: my_user_input
+        text: ""
+        vall: my_user_input
+    Label:
+        id: my_output # This id isn't serving a purpose
+        text: my_user_input.text + "!"
+
+    Button:
+        text: 'Enter'
+        size_hint_y: None
+        height: '50sp'
