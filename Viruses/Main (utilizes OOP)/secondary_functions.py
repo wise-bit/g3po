@@ -13,7 +13,8 @@ def introduction():
 	print("\t\t1. Analysis of name of disease from our growing database")
 	print("\t\t2. Analysis from provided DNA (Can be paired with a DNA sequencer)")
 	print("\t\t3. Debug (ONLY for testing purposes)")
-	print("\t\t4. Exit application (Can also be done by pressing ctrl+Z at any moment)")
+	print("\t\t4. New addition to training database")
+	print("\t\t5. Exit application (Can also be done by pressing ctrl+Z at any moment)")
 	a = int(input("\n\t\tYour choice: "))
 	clear()
 	return a
