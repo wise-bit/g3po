@@ -29,7 +29,7 @@ def symptoms_fetcher(name):
 	elif (symptoms != None):
 		try:
 			symps = str(cont).lower().split("== signs and symptoms ==")[1]
-			print(symps)
+			# print(symps)
 			symp = symps.split("== c")[0]
 			if (len(symp) > 5):
 				return("\nSymptoms include: " + symp)
