@@ -2,6 +2,7 @@
 
 import wikipedia
 
+# This fetches the definition of a disease from wikipedia 
 def definition_fetcher(name):
 	page = wikipedia.page(name)
 	info = wikipedia.summary(name, sentences=2)
@@ -17,6 +18,7 @@ def definition_fetcher(name):
 	# 	print("\n" + str(loc1) + " " + str(loc2))
 
 
+# This part fetches sypmtoms of a disease 
 def symptoms_fetcher(name):
 	page = wikipedia.page(name)
 	cont = page.content

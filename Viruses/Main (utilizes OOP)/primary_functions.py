@@ -10,11 +10,12 @@ from pathlib import Path
 from difflib import SequenceMatcher
 
 
+# Clear screen
 def clear():
 	os.system('cls')
 	return None
 
-
+# Return width 
 def get_width():
 	hw = os.get_terminal_size()
 	return(hw[0]-3)

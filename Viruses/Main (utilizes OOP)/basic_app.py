@@ -62,11 +62,13 @@ try:
 	elif choice == 4:
 		print("Unable to establish connection to database, try again.")
 		exit()
-
+		
+	# Exit sequence
 	elif choice == 5:
 		clear()
 		exit()
 
+	# Invalid choice option
 	else:
 		print("Sorry, that choice isn't available.")
 		exit()
