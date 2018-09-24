@@ -1,4 +1,4 @@
-def translate_dna(sequence):
+def translate_nucelotide(sequence):
     code_table = {
     'ATA':'I', 'ATC':'I', 'ATT':'I', 'ATG':'M',
     'ACA':'T', 'ACC':'T', 'ACG':'T', 'ACT':'T',
@@ -23,3 +23,7 @@ def translate_dna(sequence):
         if cds[n:n+3] in code_table:
             protein += code_table[cds[n:n+3]]
     return(protein.lower())
+
+def scorer(sequence):
+    return null
+

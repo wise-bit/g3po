@@ -9,3 +9,6 @@ from prediction_functions import *
 
 with open("Prediction_storage\\keywords.txt", "r") as file:
 	check_symptoms_database(file)
+
+
+import basic_app

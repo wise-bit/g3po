@@ -1,24 +1,6 @@
 # functions directly related to the UX
 from primary_functions import *
-
-def user_query_input():
-	print("Hello! What would you like to look up today?".center(get_width()))
-	organism = input("".center(int(get_width()/2) - 21))
-	return organism
-
-def introduction():
-	clear()
-	print("Welcome to the DNA analyzer v 2.0 [AKA G3PO]\n\n\n\n".center(get_width()))
-	print("Please chose one of the options below in order to begin analysis\n\n".center(get_width()))
-	print("\t\t1. Analysis of name of disease from our growing database")
-	print("\t\t2. Analysis from provided DNA (Can be paired with a DNA sequencer)")
-	print("\t\t3. Debug (ONLY for testing purposes)")
-	print("\t\t4. New addition to training database")
-	print("\t\t5. Exit application (Can also be done by pressing ctrl+Z at any moment)")
-	a = int(input("\n\t\tYour choice: "))
-	clear()
-	return a
-
+from UX import *
 
 def lookup(name_of_search, array_of_search):
 	print("Match found: ".center(get_width()))
@@ -39,6 +21,7 @@ def find_file_same_size(size):
 
 # beta functions below
 
+
 def find_file_similar(sequence):
 	similarity = 100.0
 	position = 0
@@ -58,6 +41,7 @@ def find_file_similar(sequence):
 		fname = fname.replace(".txt", "")
 		return(''.join(filter(str.isalpha, fname.lower())))
 		#print(fname, " Similarity percentage: ", similar(sequence, file.read()))
+
 
 def dna_to_name(sequence):
 	similarity = 100.0

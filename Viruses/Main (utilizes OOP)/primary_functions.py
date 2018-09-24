@@ -3,65 +3,10 @@
 import glob 
 import sys
 import os
-import numpy as np
-from Bio import Entrez
-from PIL import Image
 from pathlib import Path 
 from difflib import SequenceMatcher
-
-
-# Clear screen
-def clear():
-	os.system('cls')
-	return None
-
-# Return width 
-def get_width():
-	hw = os.get_terminal_size()
-	return(hw[0]-3)
-
-
-def list_available_organisms():
-	arr = []
-	for filename in glob.glob('..\\..\\Training set\\DNA_collection\\*.txt'):
-		fname = Path(filename).name
-		fname = fname.replace(".txt", "")
-		arr.append(fname)
-	return arr
-
-
-def extractor(organism_name):
-	try:
-		Entrez.email = "a@example.com" 
-		handle = Entrez.esearch(db="nucleotide", term=organism_name)
-		record = Entrez.read(handle)
-		for i in range(20):
-			select = record["IdList"][i]
-			handle = Entrez.efetch(db="nucleotide", id=select, rettype="gb", retmode="xml")
-			h = handle.read()
-			locus = h.split("<GBSeq_locus>")[1].split("</GBSeq_locus>")
-			organism_name_from_database = h.split("<GBSeq_organism>")[1].split("</GBSeq_organism>")
-			hh = h.split("<GBSeq_sequence>")[1].split("</GBSeq_sequence>")
-			if len(hh[0]) < 1000000:
-				return(hh[0])
-			if i == 19:
-				return("Not found. Please try again")
-			handle.close()
-
-	except:
-		return("Unexpected error. Please check input or try again later")
-
-
-def artist(shape):
-	chars = np.asarray(list(' .,:;irsXA253hMHGS#9B&@'))
-	f, SC, GCF, WCF = ("..\\Drawing_samples\\" + shape + ".png"), 0.08, 3, 7/4
-	img = Image.open(f)
-	S = ( round(img.size[0]*SC*WCF), round(img.size[1]*SC) )
-	img = np.sum( np.asarray( img.resize(S) ), axis=2)
-	img -= img.min()
-	img = (1.0 - img/img.max())**GCF*(chars.size-1)
-	print( "\n".join( ("".join(r) for r in chars[img.astype(int)]) )) # does not center
-	return(0)
+import wikipedia
+from prediction_functions import get_symptoms_list
 
 
 def filesize(filename, where):
@@ -74,8 +19,73 @@ def filesize(filename, where):
 def similar(a, b):
     return SequenceMatcher(None, a, b).ratio()
 
-''' beta functions below '''
 
-# artist()
-# extractor()
-# list_available_organisms()
+def list_available_organisms():
+	arr = []
+	for filename in glob.glob('..\\..\\Training set\\DNA_collection\\*.txt'):
+		fname = Path(filename).name
+		fname = fname.replace(".txt", "")
+		arr.append(fname)
+	return arr
+
+
+# made this to add the wikipedia function
+
+# This fetches the definition of a disease from wikipedia 
+def definition_fetcher(name):
+	page = wikipedia.page(name)
+	info = wikipedia.summary(name, sentences=2)
+	loc1, loc2 = 0, 50
+	for i in range (len(info)):
+		if info[i] == "(":
+			loc1 = i; break;
+	for i in range(loc2, 0, -1):
+		if info[i] == ")":
+			loc2 = i; break;
+	info = info[0:loc1-1] + info[loc2+1:]
+	return("\n" + info)
+	# 	print("\n" + str(loc1) + " " + str(loc2))
+
+
+# This part fetches sypmtoms of a disease 
+def symptoms_fetcher(name):
+	page = wikipedia.page(name)
+	cont = page.content
+	# print(page.sections)
+	symptoms = page.section("Signs and symptoms")
+	# return 0
+	# print(str(cont))
+	if len(str(symptoms)) > 5:
+		return(symptoms)
+	elif (symptoms != None):
+		try:
+			symps = str(cont).lower().split("== signs and symptoms ==")[1]
+			# symps = symps.split("== c")[0]
+			# if (len(symp) > 5):
+			# 	return("\nSymptoms include: " + symp)
+			# else:
+			# 	return("\nThere are no available symptoms")
+		except:
+			return("\nThere are no available symptoms")
+	else:
+		try:
+			symps = cont.lower().split("symptoms")[1]
+			# symps = symps.split(". ")[0]
+			# if (len(symp) > 5):
+			# 	return("\nSymptoms include: " + symp)
+			# else:
+			# 	return("\nThere are no available symptoms")
+		except:
+			return("\nThere are no available symptoms")
+
+	valid = []
+	symp_dict = get_symptoms_list()
+
+	for x in symps.split(" "):
+		print(x)
+		if x.lower() in symp_dict:
+			valid.append(x)
+
+	valid = list(set(valid))
+	return ("Symptoms and potential victims include: " + ', '.join([str(x) for x in valid]) )
+
